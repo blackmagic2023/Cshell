@@ -58,11 +58,13 @@ To make the reverse shell accessible over the internet, you can use ngrok to exp
 
 # Steps to Use ngrok:
 
-   1. Download ngrok:
+   1. Download ngrok on linux:
 
 ```bash
 wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
 tar -xvzf ngrok-v3-stable-linux-amd64.tgz
+sudo mv ngrok /usr/local/bin/ngrok
+ngrok --version
 ```
 Or follow the official instructions from [ngrok.com](https://ngrok.com/)
 
